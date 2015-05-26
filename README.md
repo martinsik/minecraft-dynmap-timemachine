@@ -1,6 +1,6 @@
-# Minecraft Dynmap Timemachine
+# Minecraft Dynmap Time Machine
 
-Python 3.4 script that downloads tiles from a Minecraft's Dynmap plugin HTTP server and composes one image in extremely large resolution suitable for print.
+CLI script written in Python 3.4 that downloads tiles from a Minecraft's Dynmap plugin HTTP server and composes one image in extremely large resolution suitable for print.
 
 Work in progress.
 

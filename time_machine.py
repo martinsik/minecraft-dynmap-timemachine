@@ -7,7 +7,6 @@ import io
 from PIL import Image
 
 
-
 class TimeMachine(object):
 
     def __init__(self, dm_map):
@@ -22,17 +21,25 @@ class TimeMachine(object):
         logging.info('final size in px: [%d, %d]', width, height)
         dest_img = Image.new('RGB', (int(width), int(height)))
 
-        logging.info('downloading tiles...');
+        logging.info('downloading tiles...')
         # logging.info('tile image path: %s', image_url)
+        total_tiles = len(range(from_tile.x, to_tile.x, zoomed_scale)) * len(range(from_tile.y, to_tile.y, zoomed_scale))
+        processed = 0
 
         for x in range(from_tile.x, to_tile.x, zoomed_scale):
             for y in range(from_tile.y, to_tile.y, zoomed_scale):
                 img_rel_path = map.image_url(projection.TileLocation(x, y, t_loc.zoom))
                 img_url = self._dm_map.url + img_rel_path
 
-                logging.debug('tile [%d, %d]', x, y)
+                processed += 1
+                logging.info('tile %d/%d [%d, %d]', processed, total_tiles, x, y)
 
-                img_data = simple_downloader.download(img_url, True)
+                try:
+                    img_data = simple_downloader.download(img_url, True)
+                except Exception as e:
+                    logging.info('Unable to download "%s": %s', img_url, str(e))
+                    continue
+
                 stream = io.BytesIO(img_data)
                 im = Image.open(stream)
 

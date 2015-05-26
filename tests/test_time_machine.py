@@ -4,7 +4,8 @@ import os
 import unittest
 import datetime
 import pprint
-from peewee import *
+import projection
+from PIL import Image
 
 
 class TestTimeMachine(unittest.TestCase):
@@ -14,7 +15,23 @@ class TestTimeMachine(unittest.TestCase):
         cls.dm_majncraft = dynmap.DynMap('http://map.majncraft.cz/')
 
     def test_capture_single(self):
-        pass
+        maps = self.dm_majncraft.worlds['world'].maps
+        tm = time_machine.TimeMachine(self.dm_majncraft)
+
+        m_loc = projection.MinecraftLocation(-5000, 65, 8000, maps['surface'].worldtomap)
+        self._test_downloaded_image(maps['surface'], tm, m_loc, 1)
+
+        # check border missing tiles
+        m_loc = projection.MinecraftLocation(-5100, 65, 8100, maps['surface'].worldtomap)
+        self._test_downloaded_image(maps['surface'], tm, m_loc, 0)
+
+
+    def _test_downloaded_image(self, map, tm, m_loc, zoom):
+        img = tm.capture_single(map, m_loc.to_tile_location(zoom), (2,2))
+
+        self.assertTupleEqual(img.size, (512, 512))
+        self.assertGreater(len(img.tobytes()), 100 * 1000)
+
 
     # @classmethod
     # def setup_class(cls):
