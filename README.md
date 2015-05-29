@@ -42,7 +42,7 @@ Full list of parameter's is as follows:
 2. Then list all maps avaialble for this world:
 
    ```
-   $ python3.4 main.py --list-worlds http://map.majncraft.cz/ world surface [0,0,0] [6,4] 3 test.png
+   $ python3.4 main.py --list-worlds http://map.majncraft.cz/ world
    surface - Prostorová - Den
    surface_night - Prostorová - Noc
    populated - Osídlení světa - prostorové
