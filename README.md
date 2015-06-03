@@ -2,9 +2,9 @@
 
 CLI script in Python 2.7 that downloads tiles from a Minecraft's Dynmap plugin HTTP server and composes one image in extremely large resolution suitable for print.
 
-## Example usage:
+![Scaled down image](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.thumb.png)
 
-Let's say we want to download a 20736x13824 map (286Mpx image) from [map.majncraft.cz](http://map.majncraft.cz/) at Minecraft position [3300,65,-2630].
+This is a scaled down image form original `20736x13824`px. You can also [download full size 389 MB image](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0). See example bellow.
 
 List of all parameter is as follows:
 
@@ -26,7 +26,12 @@ List of all parameter is as follows:
       --list-worlds         list available worlds from this Dynmap server and exit
       --list-maps           list available maps for this world and exit
 
-1. **First see what worlds are available and what's the name of the world that we want.**
+## 1. Example usage - capture one large image
+
+Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.majncraft.cz](http://map.majncraft.cz/) at Minecraft position `[3300,65,-2630]`.
+
+
+1. **First see what worlds are available and what's the name of the world that we want**
 
    ```
    $ python2.7 main.py --list-worlds http://map.majncraft.cz/
@@ -37,7 +42,7 @@ List of all parameter is as follows:
 
    We want the first world on the list called simply `world`.
 
-2. **Then list all maps avaialble for this world:**
+2. **Then list all maps avaialble for this world**
 
    ```
    $ python2.7 main.py --list-worlds http://map.majncraft.cz/ world
@@ -55,7 +60,8 @@ List of all parameter is as follows:
    Check your coordinates on Dynmap or simply walk in Minecraft at the position that you want to capture and press F3 to see what are your Minecraft's coordinates. Then make a test image to make sure that the position captured by `minecraft-dynmap-timelapse` is correct:
    
    ```
-   python2.7 main.py http://map.majncraft.cz/ world surface [3300,65,-2630] [3,2] 0 majncraft.test.png
+   python2.7 main.py http://map.majncraft.cz/ world surface \
+       [3300,65,-2630] [3,2] 0 majncraft.test.png
    ```
    
    Used parameters:
@@ -77,11 +83,12 @@ List of all parameter is as follows:
    Finally, we can make the full size image:
    
    ```
-   python2.7 main.py -v http://map.majncraft.cz/ world surface [3300,65,-2630] [81,54] 0 majncraft.3320.full.png
+   python2.7 main.py -v http://map.majncraft.cz/ world surface \
+       [3300,65,-2630] [81,54] 0 majncraft.3320.full.png
    ```
    
-   This takes a while because in total it needs to download `81 * 2 * 54 * 2 = 17496` tiles. The final image has 389MB.
+   This takes a while because in total it needs to download `81 * 2 * 54 * 2 = 17496` tiles. The final image has 389 MB.
    
    ![The final image scaled down to 728px width](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.thumb.png)
    
-   You can download the [full 20736x13824 size image for this example (389MB)](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0) or a different, [smaller 16384x10240 image (168MB)](https://www.dropbox.com/s/c6zzpv2cd26x76g/majncraft.16384.png?dl=0).
+   You can download the [full 20736x13824 size image for this example (389 MB)](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0) or a different, [smaller 16384x10240 image (168 MB)](https://www.dropbox.com/s/c6zzpv2cd26x76g/majncraft.16384.png?dl=0).
