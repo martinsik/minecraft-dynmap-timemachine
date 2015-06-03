@@ -1,14 +1,14 @@
 # Minecraft Dynmap Time Machine
 
-CLI script in Python 3.4 that downloads tiles from a Minecraft's Dynmap plugin HTTP server and composes one image in extremely large resolution suitable for print.
+CLI script in Python 2.7 that downloads tiles from a Minecraft's Dynmap plugin HTTP server and composes one image in extremely large resolution suitable for print.
 
 ## Example usage:
 
-Let's say we want to download a 6144x4096 map from [map.majncraft.cz](http://map.majncraft.cz/) at Minecraft position [-2000,65,1000].
+Let's say we want to download a 20736x13824 map (286Mpx image) from [map.majncraft.cz](http://map.majncraft.cz/) at Minecraft position [3300,65,-2630].
 
 List of all parameter is as follows:
 
-    $ python3.4 main.py -h
+    $ python2.7 main.py -h
     usage: main.py [-h] [--list-worlds] [--list-maps] [-q] [-v] [-vv]
                    base_url [world] [map] [center] [boundary_size] [zoom] [dest]
     
@@ -29,7 +29,7 @@ List of all parameter is as follows:
 1. **First see what worlds are available and what's the name of the world that we want.**
 
    ```
-   $ python3.4 main.py --list-worlds http://map.majncraft.cz/
+   $ python2.7 main.py --list-worlds http://map.majncraft.cz/
    world - Svět Majncraft | Overworld
    world_space - Vesmír | Space
    world_nether - Nether Reloaded
@@ -40,7 +40,7 @@ List of all parameter is as follows:
 2. **Then list all maps avaialble for this world:**
 
    ```
-   $ python3.4 main.py --list-worlds http://map.majncraft.cz/ world
+   $ python2.7 main.py --list-worlds http://map.majncraft.cz/ world
    surface - Prostorová - Den
    surface_night - Prostorová - Noc
    populated - Osídlení světa - prostorové
@@ -48,31 +48,40 @@ List of all parameter is as follows:
    populated_flat - Osídlení světa - ploché
    ```
     
-   This lists flat, isometric, cave and all other types of maps together. Map names depend on Dynamp's configuration. We want the first one called `surface` which is an isometric map.
+   This lists flat, isometric, cave and all other types of maps together. Map names depend on Dynmap's configuration. We want the first one called `surface` which is an isometric map.
    
 3. **Make a test image with Minecraft's coordinates**
 
-   Check your coordinates on Dynmap or simply walk in Minecraft at the position that you want to capture and press F3 to see what are your Minecraft's coordinates:
+   Check your coordinates on Dynmap or simply walk in Minecraft at the position that you want to capture and press F3 to see what are your Minecraft's coordinates. Then make a test image to make sure that the position captured by `minecraft-dynmap-timelapse` is correct:
    
    ```
-   python3.4 main.py http://map.majncraft.cz/ world surface [-2000,65,1000] [2,2] 0 majncraft_cz.full.png
+   python2.7 main.py http://map.majncraft.cz/ world surface [3300,65,-2630] [3,2] 0 majncraft.test.png
    ```
    
    Used parameters:
    
-   - `http://map.majncraft.cz/` - Dynmap's HTTP server URL.
-   - `world` - World name.
-   - `surface` - Map name.
-   - `[-2000,65,1000]` - Minecraft coordiantes that will be automatically converted to tile names.
-   - `[2,2]` - Number of tiles I want to download in each direction from specified coordinates. That's two to the left and right, two to the top and bottom. This will actually download 4x4 grid where each tile is 128x128 pixels. In total this image will be 512x512 pixels.
-   - `0` - Zoom level. 0 means maximum zoom in. Number of zoom levels depend's on Dynamp's configuration.
-   - `majncraft_cz.full.png` - Output file name.
+   - `http://map.majncraft.cz/` - Dynmap's HTTP server URL
+   - `world` - World name
+   - `surface` - Map name
+   - `[3300,65,-2630]` - Minecraft coordiantes that will be automatically converted to tile names
+   - `[3,2]` - Number of tiles I want to download in each direction from specified coordinates. That's two to the left and right, two to the top and bottom. This will actually download 6x4 grid where each tile is 128x128 pixels. In total this image will be 768x512 pixels
+   - `0` - Zoom level. 0 means maximum zoom in. Number of zoom levels depend's on Dynamp's configuration
+   - `majncraft.test.png` - Output file name
    
-   This should generate a 512x512 image (this one is scaled down to 256x256, see [full 512x512 size image](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft_cz.512.png)):
+   This should generate a 768x512 image:
    
-   ![Preview from 4x4 grid](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft_cz.256.png)
+   ![Preview from 6x4 grid](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.test.png)
    
-4. **Make a full size image in 6144x4096 resolution.**
+4. **Make a full size image in 20736x13824 resolution.**
    
+   Finally, we can make the full size image:
    
+   ```
+   python2.7 main.py -v http://map.majncraft.cz/ world surface [3300,65,-2630] [81,54] 0 majncraft.3320.full.png
+   ```
    
+   This takes a while because in total it needs to download `81 * 2 * 54 * 2 = 17496` tiles. The final image has 389MB.
+   
+   ![The final image scaled down to 728px width](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.thumb.png)
+   
+   You can download the [full 20736x13824 size image for this example (389MB)](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0) or a different, [smaller 16384x10240 image (168MB)](https://www.dropbox.com/s/c6zzpv2cd26x76g/majncraft.16384.png?dl=0).

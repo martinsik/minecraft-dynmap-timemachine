@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import dynmap
 import os
 import unittest
@@ -57,7 +59,7 @@ class TestDynMap(unittest.TestCase):
         self.assertGreaterEqual(len(worlds), 3)  # assume there's a few of them. Modify if needed
         self.assertIn('world', worlds)
         self.assertEqual(worlds['world'].name, 'world')
-        self.assertEqual(worlds['world'].title, 'Svět Majncraft | Overworld')
+        self.assertEqual(worlds['world'].title, u'Svět Majncraft | Overworld')
 
         print()
         for name in worlds.keys():
@@ -70,7 +72,7 @@ class TestDynMap(unittest.TestCase):
         # self.assertTrue(dynmap.Map.is_known_shader(maps['surface'].shader))
 
         self.assertEqual(maps['surface'].name, 'surface')
-        self.assertEqual(maps['surface'].title, 'Prostorová - Den')
+        self.assertEqual(maps['surface'].title, u'Prostorová - Den')
         self.assertGreater(len(maps['surface'].worldtomap), 0)
 
         # test unknown perspective and shader

@@ -49,9 +49,9 @@ class TestProjection(unittest.TestCase):
         loc = projection.TileLocation(40, 10, 2)
         p_from, p_to = loc.make_range(4, 3)
         self.assertEqual(p_from.x, 24)
-        self.assertEqual(p_from.y, -4)
+        self.assertEqual(p_from.y, 0)
         self.assertEqual(p_to.x, 56)
-        self.assertEqual(p_to.y, 20)
+        self.assertEqual(p_to.y, 24)
 
 
     def test_minecraft_location(self):

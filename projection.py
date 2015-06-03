@@ -1,11 +1,11 @@
-
+import math
 
 def zoomed_scale(zoom):
     return 2 ** zoom
 
 
 def better_round(num, base):
-    return int(base * round(float(num) / base))
+    return int(base * math.ceil(float(num) / base))
 
 
 class Location(object):
@@ -24,7 +24,7 @@ class Location(object):
 
 class TileLocation(Location):
     def __init__(self, x, y, zoom=0):
-        super().__init__(x, y)
+        super(TileLocation, self).__init__(x, y)
         self.zoom = zoom
 
     def make_range(self, width, height):
