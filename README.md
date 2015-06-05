@@ -4,7 +4,7 @@ CLI script in Python 2.7 that downloads tiles from a Minecraft's Dynmap plugin H
 
 ![Scaled down image](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.thumb.png)
 
-This is a scaled down image form original `20736x13824`px. You can also [download full size 389 MB image](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0). See example bellow.
+This is a scaled down image form original `20736 x 13824`px. You can also [download full size 389 MB image](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0). See example bellow.
 
 List of all parameter is as follows:
 
@@ -91,4 +91,4 @@ Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.ma
    
    ![The final image scaled down to 728px width](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.thumb.png)
    
-   You can download the [full 20736x13824 size image for this example (389 MB)](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0) or a different, [smaller 16384x10240 image (168 MB)](https://www.dropbox.com/s/c6zzpv2cd26x76g/majncraft.16384.png?dl=0).
+   You can download the [full 20736x13824 size image for this example (389 MB)](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0) or a different, [smaller 16384x10240 image (168 MB)](https://www.dropbox.com/s/c6zzpv2cd26x76g/majncraft.16384.png?dl=0) if you just want to see what it looks like in full resolution.
