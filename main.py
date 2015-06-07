@@ -1,10 +1,13 @@
 import logging
 import argparse
+import glob
+import sys
+import os
+import time
 import dynmap
 import time_machine
 import projection
-import sys
-import os
+from PIL import Image
 
 # logger = logging.getLogger('')
 
@@ -16,12 +19,12 @@ if __name__ == '__main__':
     parser.add_argument('center', nargs='?', help='minecraft cooridnates, use format: [x,y,z]')
     parser.add_argument('boundary_size', nargs='?', help='size in tiles, use format: [h,v]')
     parser.add_argument('zoom', nargs='?', default='0', help='zoom level, 0 = maximum zoom')
-    parser.add_argument('dest', nargs='?', help='output file name')
+    parser.add_argument('dest', nargs='?', help='output file name or directory')
     # parser.add_argument('out_dir')
     # parser.add_argument('-t', '--type', default='flat')
     parser.add_argument('--list-worlds', action='store_true', help='list available worlds from this Dynmap server and exit')
     parser.add_argument('--list-maps', action='store_true', help='list available maps for this world and exit')
-    # parser.add_argument('-cs', '--capture_status', action='store_true')
+    parser.add_argument('-t', '--threshold', nargs='?', default='0.01', help='threshold for timelapse images')
     parser.add_argument('-q', '--quiet', action='store_true')
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('-vv', '--verbose-debug', action='store_true')
@@ -83,7 +86,19 @@ if __name__ == '__main__':
         dest = args.dest
         zoom = int(args.zoom)
         img = tm.capture_single(dm_map, m_loc.to_tile_location(zoom), size)
-        img.save(dest)
+
+        if os.path.isdir(dest):
+            files = list(glob.iglob(os.path.join(dest, '*.png')))
+            if files:
+                newest_image = max(files, key=os.path.getctime)
+                difference = tm.compare_images(Image.open(newest_image), img)
+                threshold = float(args.threshold)
+
+            if not files or difference >= threshold:
+                dest = os.path.join(dest, time.strftime('%Y-%m-%d %H-%M-%S') + '.png')
+                img.save(dest)
+        else:
+            img.save(dest)
 
         logging.info('saving image to "%s" (%d KB)', dest, os.path.getsize(dest) / 1000)
 

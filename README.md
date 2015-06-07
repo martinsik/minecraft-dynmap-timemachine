@@ -9,7 +9,7 @@ This is a scaled down image form original `20736 x 13824`px. You can also [downl
 List of all parameter is as follows:
 
     $ python2.7 main.py -h
-    usage: main.py [-h] [--list-worlds] [--list-maps] [-q] [-v] [-vv]
+    usage: main.py [-h] [--list-worlds] [--list-maps] [-t [THRESHOLD]] [-q] [-v]
                    base_url [world] [map] [center] [boundary_size] [zoom] [dest]
     
     positional arguments:
@@ -19,14 +19,18 @@ List of all parameter is as follows:
       center                minecraft cooridnates, use format: [x,y,z]
       boundary_size         size in tiles, use format: [h,v]
       zoom                  zoom level, 0 = maximum zoom
-      dest                  output file name
+      dest                  output file name or directory
     
     optional arguments:
       -h, --help            show this help message and exit
       --list-worlds         list available worlds from this Dynmap server and exit
       --list-maps           list available maps for this world and exit
+      -t [THRESHOLD], --threshold [THRESHOLD]
+                            threshold for timelapse images
+      -q, --quiet
+      -v, --verbose
 
-## 1. Example usage - capture one large image
+## 1. Example - capture one large image
 
 Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.majncraft.cz](http://map.majncraft.cz/) at Minecraft position `[3300,65,-2630]`.
 
@@ -92,3 +96,7 @@ Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.ma
    ![The final image scaled down to 728px width](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.thumb.png)
    
    You can download the [full 20736x13824 size image for this example (389 MB)](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0) or a different, [smaller 16384x10240 image (168 MB)](https://www.dropbox.com/s/c6zzpv2cd26x76g/majncraft.16384.png?dl=0) if you just want to see what it looks like in full resolution.
+   
+## 2. Example - create timelapse video
+
+   

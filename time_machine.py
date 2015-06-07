@@ -54,22 +54,13 @@ class TimeMachine(object):
         return dest_img
 
 
-    def compare_images(self, file1, file2):
-#        newest = max(files, key=os.path.getctime)
-#         im_current = Image.open(file1, 0)
+    def compare_images(self, image1, image2):
+        file1data = list(image1.getdata())
+        file2data = list(image2.getdata())
 
-        file1data = Image.open(file1, 0).getdata()
-        file2data = Image.open(file2, 0).getdata()
+        diff = 0
+        for i in range(len(file1data)):
+            if file1data[i] != file2data[i]:
+                diff += 1
 
-
-        # res = cv2.matchTemplate(im_current, im_newest, cv2.TM_CCOEFF_NORMED)
-        # loc = numpy.where(res < 0.99999)
-        #
-        # print('opencv match: ' + str(res))
-
-        # if len(zip(*loc[::-1])) > 0:  # two compared maps are different
-        #     os.rename(tmp_filepath, out_filepath)
-            # print 'image saved to: ' + out_filepath
-        # else:
-        #     os.remove(tmp_filepath)
-            # print 'no significant difference, image discarded'
+        return float(diff) / len(file1data)

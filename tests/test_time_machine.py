@@ -8,6 +8,8 @@ import projection
 from PIL import Image
 
 
+_path = os.path.dirname(__file__)
+
 class TestTimeMachine(unittest.TestCase):
 
     @classmethod
@@ -32,6 +34,25 @@ class TestTimeMachine(unittest.TestCase):
         self.assertTupleEqual(img.size, (512, 512))
         self.assertGreater(len(img.tobytes()), 100 * 1000)
 
+    def test_compare_images(self):
+        tm = time_machine.TimeMachine(self.dm_majncraft)
+        result = tm.compare_images(Image.open(os.path.join(_path, 'flat.test.1.png'), 'r'), Image.open(os.path.join(_path, 'flat.test.2.png'), 'r'))
+        self.assertGreater(0.0004, result)
+
+        result = tm.compare_images(Image.open(os.path.join(_path, 'flat.test.2.png'), 'r'), Image.open(os.path.join(_path, 'flat.test.3.png'), 'r'))
+        self.assertGreater(0.0004, result)
+
+        result = tm.compare_images(Image.open(os.path.join(_path, 'flat.test.3.png'), 'r'), Image.open(os.path.join(_path, 'flat.test.4.png'), 'r'))
+        self.assertGreater(0.0008, result)
+
+        result = tm.compare_images(Image.open(os.path.join(_path, 'surface.test.1.png'), 'r'), Image.open(os.path.join(_path, 'surface.test.2.png'), 'r'))
+        self.assertGreater(0.0025, result)
+
+        result = tm.compare_images(Image.open(os.path.join(_path, 'surface.test.1.png'), 'r'), Image.open(os.path.join(_path, 'surface.test.3.png'), 'r'))
+        self.assertGreater(0.0045, result)
+
+        result = tm.compare_images(Image.open(os.path.join(_path, 'surface.test.3.png'), 'r'), Image.open(os.path.join(_path, 'surface.test.4.png'), 'r'))
+        self.assertGreater(0.019, result)
 
     # @classmethod
     # def setup_class(cls):
