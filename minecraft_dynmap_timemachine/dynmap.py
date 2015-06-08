@@ -1,11 +1,10 @@
 # import urllib
-import re
 import json
-import simple_downloader
-import logging
 import time
 import math
-import projection
+
+import re
+import simple_downloader
 
 
 class MapException(Exception):

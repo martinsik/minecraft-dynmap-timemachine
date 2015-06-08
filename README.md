@@ -2,14 +2,14 @@
 
 CLI script in Python 2.7 that downloads tiles from a Minecraft's Dynmap plugin HTTP server and composes one image in extremely large resolution suitable for print.
 
-![Scaled down image](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.thumb.png)
+![Scaled down image](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.crop.png)
 
 This is a scaled down image form original `20736 x 13824`px. You can also [download full size 389 MB image](https://www.dropbox.com/s/hhq6jbuxyu6fmr0/majncraft.20736.full.png?dl=0). See example bellow.
 
 List of all parameter is as follows:
 
-    $ python2.7 main.py -h
-    usage: main.py [-h] [--list-worlds] [--list-maps] [-t [THRESHOLD]] [-q] [-v]
+    $ dynmap-timemachine.py -h
+    usage: dynmap-timemachine.py [-h] [--list-worlds] [--list-maps] [-t [THRESHOLD]] [-q] [-v]
                    base_url [world] [map] [center] [boundary_size] [zoom] [dest]
     
     positional arguments:
@@ -30,6 +30,14 @@ List of all parameter is as follows:
       -q, --quiet
       -v, --verbose
 
+## Installation
+
+Most easily install using `pip`:
+
+    ```
+    pip install minecraft-dynmap-timelapse
+    ```
+
 ## 1. Example - capture one large image
 
 Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.majncraft.cz](http://map.majncraft.cz/) at Minecraft position `[3300,65,-2630]`.
@@ -38,7 +46,7 @@ Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.ma
 1. **First see what worlds are available and what's the name of the world that we want**
 
    ```
-   $ python2.7 main.py --list-worlds http://map.majncraft.cz/
+   $ dynmap-timemachine.py --list-worlds http://map.majncraft.cz/
    world - Svět Majncraft | Overworld
    world_space - Vesmír | Space
    world_nether - Nether Reloaded
@@ -49,7 +57,7 @@ Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.ma
 2. **Then list all maps avaialble for this world**
 
    ```
-   $ python2.7 main.py --list-worlds http://map.majncraft.cz/ world
+   $ dynmap-timemachine.py --list-worlds http://map.majncraft.cz/ world
    surface - Prostorová - Den
    surface_night - Prostorová - Noc
    populated - Osídlení světa - prostorové
@@ -64,7 +72,7 @@ Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.ma
    Check your coordinates on Dynmap or simply walk in Minecraft at the position that you want to capture and press F3 to see what are your Minecraft's coordinates. Then make a test image to make sure that the position captured by `minecraft-dynmap-timelapse` is correct:
    
    ```
-   python2.7 main.py http://map.majncraft.cz/ world surface \
+   $ dynmap-timemachine.py http://map.majncraft.cz/ world surface \
        [3300,65,-2630] [3,2] 0 majncraft.test.png
    ```
    
@@ -82,12 +90,12 @@ Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.ma
    
    ![Preview from 6x4 grid](https://raw.githubusercontent.com/martinsik/minecraft-dynmap-timemachine/master/doc/majncraft.3320.test.png)
    
-4. **Make a full size image in 20736x13824 resolution.**
+4. **Make a full size image in 20736x13824 resolution**
    
    Finally, we can make the full size image:
    
    ```
-   python2.7 main.py -v http://map.majncraft.cz/ world surface \
+   $ dynmap-timemachine.py -v http://map.majncraft.cz/ world surface \
        [3300,65,-2630] [81,54] 0 majncraft.3320.full.png
    ```
    
@@ -99,4 +107,23 @@ Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.ma
    
 ## 2. Example - create timelapse video
 
+Another use case is creating timelapse animations from multiple images captured from a Dynmap.
    
+Usage is the same as capturing a single image but this time the last argument is not an output file name but it's a directory for timelapse images instead. File names are generated automatically. The script captures an image from Dynmap and then compares it with the last image in the directory. Only if these two are significantly different (by default 1% of pixels; you can change it with `-t|--threshold`) it saves the new image.
+   
+You can ideally schedule to run this script every few minutes when you're building something and it'll genereate series of images capturing your progress named by the time they were captured.
+   
+   1. **Create a directory for timelapse images**
+   
+   ```
+   $ mkdir images
+   ```
+   
+   2. Run `dynmap-timemachine.py` periodically (eg. with `cron`) 
+   
+   ```
+   $ dynmap-timemachine.py -v http://map.majncraft.cz/ world surface \
+       [3300,65,-2630] [4,3] 0 images/
+   ```
+   
+   Note that this image should be relatively small because we want it to capture the map at this particular moment. That's why it can't take hours like the previous example.

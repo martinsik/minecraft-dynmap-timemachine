@@ -1,5 +1,6 @@
-import simple_downloader
 import unittest
+from minecraft_dynmap_timemachine import simple_downloader
+
 # from urllib.error import HTTPError
 
 class TestSimpleDownloader(unittest.TestCase):

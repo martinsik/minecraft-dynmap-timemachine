@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import dynmap
-import os
 import unittest
-import projection
+from minecraft_dynmap_timemachine import dynmap
+from minecraft_dynmap_timemachine import projection
 
 
 class TestDynMapClassMethods(unittest.TestCase):

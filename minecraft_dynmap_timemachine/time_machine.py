@@ -1,10 +1,9 @@
-import dynmap
 import logging
 import time
+import io
+
 import projection
 import simple_downloader
-import io
-import os
 from PIL import Image
 
 

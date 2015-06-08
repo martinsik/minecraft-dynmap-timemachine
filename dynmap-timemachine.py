@@ -1,15 +1,17 @@
+#!/usr/bin/env python
+
 import logging
 import argparse
 import glob
 import sys
-import os
 import time
-import dynmap
-import time_machine
-import projection
+import os
 from PIL import Image
 
-# logger = logging.getLogger('')
+import minecraft_dynmap_timemachine.dynmap as dynmap
+import minecraft_dynmap_timemachine.time_machine as time_machine
+import minecraft_dynmap_timemachine.projection as projection
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -52,7 +54,7 @@ if __name__ == '__main__':
 
     if args.world:
         if not args.world:
-            logging.error('no world set, use: main.py http://dynmap-address world_name')
+            logging.error('no world set, use: dynmap-timemachine.py http://dynmap-address world_name')
             sys.exit(1)
         if args.world not in dm.worlds.keys():
             logging.error('This world doesn\'t exist.\nAvailable worlds: %s', dm.worlds.keys())
@@ -69,7 +71,7 @@ if __name__ == '__main__':
         maps = dm.worlds[args.world].maps
 
         if args.map not in maps.keys():
-            logging.error('map not found, use: main.py http://dynmap-address world_name map_name [x,y,z] [width,height]')
+            logging.error('map not found, use: dynmap-timemachine.py http://dynmap-address world_name map_name [x,y,z] [width,height]')
             for name in maps.keys():
                 print('%s - %s' % (name, maps[name].title))
             sys.exit(1)
@@ -97,9 +99,9 @@ if __name__ == '__main__':
             if not files or difference >= threshold:
                 dest = os.path.join(dest, time.strftime('%Y-%m-%d %H-%M-%S') + '.png')
                 img.save(dest)
+                logging.info('saving timelapse image to "%s" (%d KB) with difference %.2f', dest, os.path.getsize(dest) / 1000, difference * 100)
         else:
             img.save(dest)
+            logging.info('saving image to "%s" (%d KB)', dest, os.path.getsize(dest) / 1000)
 
-        logging.info('saving image to "%s" (%d KB)', dest, os.path.getsize(dest) / 1000)
-
-        sys.exit(0)
+        # sys.exit(0)

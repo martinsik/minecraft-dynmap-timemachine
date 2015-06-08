@@ -1,6 +1,5 @@
-import projection
-import os
 import unittest
+from minecraft_dynmap_timemachine import projection
 
 
 class TestProjection(unittest.TestCase):
@@ -62,18 +61,18 @@ class TestProjection(unittest.TestCase):
 
         t_loc = m_loc.to_tile_location(0)
         self.assertIsInstance(t_loc, projection.TileLocation)
-        self.assertEqual(t_loc.x, 331)
-        self.assertEqual(t_loc.y, -168)
+        self.assertEqual(t_loc.x, 332)
+        self.assertEqual(t_loc.y, -167)
 
         # test zoomlevel = 1
         t_loc = m_loc.to_tile_location(1)
         self.assertEqual(t_loc.x, 332)
-        self.assertEqual(t_loc.y, -168)
+        self.assertEqual(t_loc.y, -166)
 
         # test wtm on majnuj.cz
         worldtomap = [11.31370849898, 0.0, -11.313708498984, -5.656854249492, 13.85640646055, -5.656854249492, 5.551115123125, 0.99999999999, 5.55111512312578]
         t_loc = projection.MinecraftLocation(-1013, 65, 702, worldtomap).to_tile_location(0)
-        self.assertEqual(t_loc.x, -152)
+        self.assertEqual(t_loc.x, -151)
         self.assertEqual(t_loc.y, 20)
 
         t_loc = projection.MinecraftLocation(1280, 65, -370, worldtomap).to_tile_location(0)

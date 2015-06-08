@@ -22,6 +22,8 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+# generated from README.md
+README.rst
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

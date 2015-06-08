@@ -1,0 +1,2 @@
+include *.rst *.md LICENSE
+recursive-exclude tests *

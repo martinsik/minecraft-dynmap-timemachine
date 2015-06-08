@@ -1,12 +1,9 @@
-import dynmap
-import time_machine
-import os
 import unittest
-import datetime
-import pprint
-import projection
+import os
 from PIL import Image
-
+from minecraft_dynmap_timemachine import dynmap
+from minecraft_dynmap_timemachine import time_machine
+from minecraft_dynmap_timemachine import projection
 
 _path = os.path.dirname(__file__)
 
