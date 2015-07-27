@@ -91,6 +91,7 @@ if __name__ == '__main__':
 
         if os.path.isdir(dest):
             files = list(glob.iglob(os.path.join(dest, '*.png')))
+            difference = 0
             if files:
                 newest_image = max(files, key=os.path.getctime)
                 difference = tm.compare_images(Image.open(newest_image), img)

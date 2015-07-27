@@ -34,7 +34,7 @@ List of all parameter is as follows:
 
 Most easily install using `pip`:
 
-    $ pip install minecraft_dynmap_timelapse
+    $ pip install dynmap_timemachine
 
 ## 1. Example - capture one large image
 
