@@ -55,10 +55,10 @@ class TestDynMap(unittest.TestCase):
 
     def test_worlds_majncraft_cz(self):
         worlds = self.dm_majncraft.worlds
-        self.assertGreaterEqual(len(worlds), 3)  # assume there's a few of them. Modify if needed
+        self.assertGreaterEqual(len(worlds), 3)  # assume there's a few of them. Modify if needed.
         self.assertIn('world', worlds)
         self.assertEqual(worlds['world'].name, 'world')
-        self.assertEqual(worlds['world'].title, u'Svět Majncraft | Overworld')
+        self.assertEqual(worlds['world'].title, u'Eternia | Overworld')
 
         print()
         for name in worlds.keys():
