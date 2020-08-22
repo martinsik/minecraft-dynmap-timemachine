@@ -57,7 +57,7 @@ Let's say we want to download a `20736x13824`px map (286 Mpx image) from [map.ma
 2. **Then list all maps avaialble for this world**
 
    ```
-   $ dynmap-timemachine.py --list-worlds http://map.majncraft.cz/ world
+   $ dynmap-timemachine.py --list-maps http://map.majncraft.cz/ world
    surface - Prostorová - Den
    surface_night - Prostorová - Noc
    populated - Osídlení světa - prostorové
