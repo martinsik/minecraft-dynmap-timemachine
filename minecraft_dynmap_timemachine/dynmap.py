@@ -45,7 +45,7 @@ class DynMap(object):
 
     @staticmethod
     def parse_config_urls_string(jsonlike_str):
-        m = re.search('url\:(.+)};', jsonlike_str, re.DOTALL)
+        m = re.search('url' + ' *' + ':' + ' *' + '(.+)};', jsonlike_str, re.DOTALL)
         #return json.loads(m.group(1))
 
         pattern = r"([a-zA-Z_][a-zA-Z_0-9]*)\s*\:"
