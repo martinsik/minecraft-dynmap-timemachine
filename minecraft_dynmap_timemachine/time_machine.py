@@ -52,13 +52,12 @@ class TimeMachine(object):
 
         return dest_img
 
-
     def compare_images(self, image1, image2):
         file1data = list(image1.getdata())
         file2data = list(image2.getdata())
 
         diff = 0
-        for i in range(len(file1data)):
+        for i in range(min(len(file1data), len(file2data))):
             if file1data[i] != file2data[i]:
                 diff += 1
 
