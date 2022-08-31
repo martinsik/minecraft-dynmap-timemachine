@@ -1,2 +1,3 @@
 Pillow
 requests
+progressbar2
