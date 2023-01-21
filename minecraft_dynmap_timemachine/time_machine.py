@@ -11,6 +11,8 @@ from PIL import Image
 
 import mysql.connector as con
 
+from progressbar import ProgressBar, Percentage, Bar, ETA
+
 class TimeMachine(object):
 
     def __init__(self, dm_map):
@@ -44,6 +46,13 @@ class TimeMachine(object):
                 logging.info('connection to db failed, check params')
                 sys.exit(69)
 
+        widgets = ['Test: ', Percentage(), ' ', Bar(marker='0', left='[', right=']'),
+                   ' ', ETA()]
+        pbar = ProgressBar(widgets=widgets, maxval=(((to_tile.x-from_tile.x)/zoomed_scale) *
+                                                    ((to_tile.y-from_tile.y)/zoomed_scale)))
+
+        pbar.start()
+
         for x in range(from_tile.x, to_tile.x, zoomed_scale):
             for y in range(from_tile.y, to_tile.y, zoomed_scale):
                 img_rel_path = map.image_url(projection.TileLocation(x, y, t_loc.zoom))
@@ -73,9 +82,12 @@ class TimeMachine(object):
                 logging.debug('place to [%d, %d]', box[0], box[1])
                 dest_img.paste(im, box)
 
+                pbar.update(processed)
+
                 # avoid throttle limit, don't overload the server
                 time.sleep(float(pause))
 
+        pbar.finish()
         return dest_img
 
 
