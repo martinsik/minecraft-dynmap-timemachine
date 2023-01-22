@@ -30,6 +30,11 @@ if __name__ == '__main__':
     parser.add_argument('-q', '--quiet', action='store_true')
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('-vv', '--verbose-debug', action='store_true')
+    parser.add_argument('-ho', '--host', nargs='?', help="mysql hostname")
+    parser.add_argument('-u', '--user', nargs='?', help="mysql username")
+    parser.add_argument('-p', '--password', nargs='?', help="mysql password")
+    parser.add_argument('-po', '--port', nargs='?', default='3306', help="mysql port")
+    parser.add_argument('-dbt', '--table', nargs='?', help="mysql database table")
 
     args = parser.parse_args()
 
@@ -44,7 +49,6 @@ if __name__ == '__main__':
 
 
     dm = dynmap.DynMap(args.base_url)
-
     if args.list_worlds:
         worlds = dm.worlds
         logging.info('available worlds: %s', str(worlds))
@@ -87,7 +91,12 @@ if __name__ == '__main__':
         tm = time_machine.TimeMachine(dm)
         dest = args.dest
         zoom = int(args.zoom)
-        img = tm.capture_single(dm_map, m_loc.to_tile_location(zoom), size)
+        host = args.host
+        user=args.user
+        password = args.password
+        port = args.port
+        table = args.table
+        img = tm.capture_single(dm_map, m_loc.to_tile_location(zoom), size, host=host, user=user, password=password, port=port, table=table)
 
         if os.path.isdir(dest):
             files = list(glob.iglob(os.path.join(dest, '*.png')))

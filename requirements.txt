@@ -1,2 +1,6 @@
-Pillow
-requests
+Pillow~=9.2.0
+requests~=2.28.1
+
+setuptools~=49.2.1
+mysql-connector-python~=8.0.32
+progressbar~=2.5
